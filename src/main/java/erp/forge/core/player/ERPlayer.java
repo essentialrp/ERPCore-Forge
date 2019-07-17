@@ -1,8 +1,8 @@
 package erp.forge.core.player;
 
 import erp.forge.core.ERPCoreForge;
-import erp.forge.core.datamanager.PlayerData;
-import erp.forge.core.datamanager.PlayerDatas;
+import erp.forge.core.datamanager.Database;
+import erp.forge.core.datamanager.Databases;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.UUID;
@@ -11,7 +11,7 @@ public class ERPlayer {
 
 
     public static boolean accountExist(EntityPlayer player){
-        PlayerData playerData = PlayerDatas.getPlayerData(player);
+        Database playerData = Databases.getPlayerData(player);
         if(playerData.getBoolean("exist") == false){
             ERPCoreForge.logger.info("Account does not exist");
 
@@ -23,7 +23,7 @@ public class ERPlayer {
 
     public static void loadAccount(EntityPlayer player){
         if(!accountExist(player)){
-            PlayerData playerData = PlayerDatas.getPlayerData(player);
+            Database playerData = Databases.getPlayerData(player);
             ERPCoreForge.logger.info("Load account");
 
             for(EnumProfile data : EnumProfile.values()){
@@ -50,7 +50,7 @@ public class ERPlayer {
 
     public static void clearAccount(EntityPlayer player){
         UUID playerUUID = player.getGameProfile().getId();
-        PlayerDatas.PLAYERDATAS.remove(playerUUID);
+        Databases.PLAYERDATAS.remove(playerUUID);
     }
 
 

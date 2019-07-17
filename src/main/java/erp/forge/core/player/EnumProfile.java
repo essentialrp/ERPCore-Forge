@@ -5,7 +5,7 @@ import java.util.Map;
 
 public enum  EnumProfile {
 
-    EXIST(0, "exist", true, Boolean.class),
+    EXIST(0, "exist", "yes", String.class),
     FIRSTNAME(1, "firstname", "", String.class),
     LASTNAME(2, "lastname", "", String.class),
     AGE(3, "age", 0, Integer.class),

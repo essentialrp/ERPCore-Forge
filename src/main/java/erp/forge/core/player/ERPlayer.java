@@ -1,12 +1,14 @@
 package erp.forge.core.player;
 
 import erp.forge.core.ERPCoreForge;
+import erp.forge.core.network.message.MessagePlayerMoneyHUD;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.UUID;
+
 
 public class ERPlayer {
 
@@ -22,7 +24,7 @@ public class ERPlayer {
         return uuid;
     }
 
-    public EntityPlayer getPlayer() {
+    public EntityPlayerMP getPlayer() {
         return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(this.uuid);
     }
 
@@ -52,6 +54,14 @@ public class ERPlayer {
         this.set(EnumProfile.AGE, age);
     }
 
+    public void addAge(int age){
+        this.add(EnumProfile.AGE, age);
+    }
+
+    public void removeAge(int age){
+        this.remove(EnumProfile.AGE, age);
+    }
+
     public String getJob(){
         return (String)this.get(EnumProfile.JOB);
     }
@@ -70,10 +80,12 @@ public class ERPlayer {
 
     public void addMoney(int money){
         this.add(EnumProfile.MONEY, money);
+        this.sendHUDMoneyEvent(false, money);
     }
 
     public void removeMoney(int money){
         this.remove(EnumProfile.MONEY, money);
+        this.sendHUDMoneyEvent(true, money);
     }
 
     public int getBank(){
@@ -151,15 +163,11 @@ public class ERPlayer {
 
     // UTILS
     public boolean accountExist() {
-        if (((String)this.get(EnumProfile.EXIST)).equalsIgnoreCase("yes")) {
-            return true;
-        } else {
-            return false;
-        }
+        return (this.get(EnumProfile.EXIST) != null);
     }
 
     public void loadAccount() {
-        if (accountExist() == false) {
+        if (!accountExist()) {
             ERPCoreForge.logger.info("Creating account for: " + getPlayer().getName());
 
             for (EnumProfile data : EnumProfile.values()) {
@@ -172,5 +180,12 @@ public class ERPlayer {
         return this.playerData;
     }
 
+    public void sendHUDMoneyEvent(Boolean isWithdraw, int amount){
+        if(isWithdraw) {
+            ERPCoreForge.instance.getPacketChannel().sendToAll(new MessagePlayerMoneyHUD("§c-"+amount+"$"));
+        } else {
+            ERPCoreForge.instance.getPacketChannel().sendToAll(new MessagePlayerMoneyHUD("§a+"+amount+"$"));
+        }
+    }
 
 }

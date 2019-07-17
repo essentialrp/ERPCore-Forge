@@ -1,6 +1,8 @@
 package erp.forge.core;
 
+import erp.forge.core.common.commands.CommandTest;
 import erp.forge.core.network.PacketHandler;
+import erp.forge.core.proxy.ClientProxy;
 import erp.forge.core.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -9,8 +11,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = ERPCoreForge.MODID, name = "erp-core-forge",version = ERPCoreForge.VERSION)
@@ -26,8 +31,13 @@ public class ERPCoreForge {
     public static ERPCoreForge instance;
 
     //here you must specify the path to the folder where the proxy files are located
-   	@SidedProxy(clientSide = "erp.forge.core.proxy.ClientProxy", serverSide = "erp.forge.core.proxy.CommonProxy")
+   	@SidedProxy(clientSide = "erp.forge.core.proxy.ClientProxy", serverSide = "erp.forge.core.proxy.ServerProxy")
    	public static CommonProxy proxy;
+
+    @SideOnly(Side.CLIENT)
+    public static ClientProxy getClientProxy() {
+        return (ClientProxy) proxy;
+    }
 
 
     public SimpleNetworkWrapper getPacketChannel() {
@@ -53,6 +63,11 @@ public class ERPCoreForge {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         proxy.postInit(event);
+    }
+
+    @Mod.EventHandler
+    public void onServerStarting(FMLServerStartingEvent e){
+        e.registerServerCommand(new CommandTest());
     }
 
 }

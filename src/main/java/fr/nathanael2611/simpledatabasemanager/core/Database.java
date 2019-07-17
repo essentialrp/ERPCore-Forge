@@ -1,14 +1,27 @@
 package fr.nathanael2611.simpledatabasemanager.core;
 
+import fr.nathanael2611.simpledatabasemanager.network.PacketHandler;
+import fr.nathanael2611.simpledatabasemanager.network.PacketSendClientPlayerData;
 import fr.nathanael2611.simpledatabasemanager.util.Helpers;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 import java.util.HashMap;
+import java.util.UUID;
 
+/**
+ * The Database class.
+ * Can be serialized to nbt.
+ * Can be deserialized from nbt.
+ *
+ * @author Nathanael2611
+ */
 public class Database implements INBTSerializable<NBTTagCompound> {
     public static final String[] COMMAND_SET_ACTIONS = new String[]{
             "setString", "setDouble", "setBoolean", "setInteger", "setFloat"
@@ -39,17 +52,11 @@ public class Database implements INBTSerializable<NBTTagCompound> {
      *  String stuff
      */
     public String getString(String key){
-        if(STRINGS.containsKey(key)){
-            for(String str : STRINGS.values()){
-                System.out.println(str);
-            }
-            return STRINGS.get(key);
-        }
-        return "<undefined string>";
+        return STRINGS.get(key);
     }
     public void setString(String key, String value){
         STRINGS.put(key, value);
-        Databases.save();
+        save();
     }
 
 
@@ -64,7 +71,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void setInteger(String key, int value){
         INTEGERS.put(key, value);
-        Databases.save();
+        save();
     }
 
     /**
@@ -78,7 +85,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void setDouble(String key, double value){
         DOUBLES.put(key, value);
-        Databases.save();
+        save();
     }
 
     /**
@@ -92,7 +99,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void setFloat(String key, float value){
         FLOATS.put(key, value);
-        Databases.save();
+        save();
     }
 
     /**
@@ -106,7 +113,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void setBoolean(String key, boolean value){
         BOOLEANS.put(key, value);
-        Databases.save();
+        save();
     }
 
     @Override
@@ -264,5 +271,14 @@ public class Database implements INBTSerializable<NBTTagCompound> {
         return Helpers.extractAllHashMapEntryNames(BOOLEANS);
     }
 
+    public void save(){
+        Databases.save();
+        EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(this.id));
+        if(player != null){
+            PacketHandler.getNetwork().sendTo(
+                    new PacketSendClientPlayerData(player), player
+            );
+        }
+    }
 
 }

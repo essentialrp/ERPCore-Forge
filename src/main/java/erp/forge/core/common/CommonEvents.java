@@ -3,7 +3,6 @@ package erp.forge.core.common;
 
 import erp.forge.core.ERPCoreForge;
 import erp.forge.core.player.ERPlayer;
-import erp.forge.core.player.EnumProfile;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -20,8 +19,7 @@ public class CommonEvents {
         ERPCoreForge.logger.info("Loading account");
         ERPlayer erPlayer = new ERPlayer(player.getUniqueID());
         erPlayer.loadAccount();
-        erPlayer.add(EnumProfile.AGE, 1);
-        player.sendMessage(new TextComponentString("Age: "+erPlayer.get(EnumProfile.AGE)));
+        player.sendMessage(new TextComponentString("Age: "+erPlayer.getAge()));
     }
 
 }

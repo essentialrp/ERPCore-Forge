@@ -1,6 +1,7 @@
 package erp.forge.core.network;
 
 import erp.forge.core.ERPCoreForge;
+import erp.forge.core.network.message.MessagePlayerMoneyHUD;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -11,7 +12,7 @@ public class PacketHandler {
     private static int nextId = 1;
 
     public static void init() {
-        //registerMessage(MessageSyncNBT.class, MessageSyncNBT.class, Side.SERVER);
+        registerMessage(MessagePlayerMoneyHUD.Handler.class, MessagePlayerMoneyHUD.class, Side.CLIENT);
     }
 
     private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {

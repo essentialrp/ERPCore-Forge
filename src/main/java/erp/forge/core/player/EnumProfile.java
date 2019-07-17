@@ -20,7 +20,6 @@ public enum  EnumProfile {
 
     public static Map<String, EnumProfile> enumProfile = new HashMap<>();
 
-
     EnumProfile(int id, String key, Object defaultValue, Class type){
         this.id = id;
         this.key = key;

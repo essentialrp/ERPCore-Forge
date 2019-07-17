@@ -1,6 +1,7 @@
 package erp.forge.core;
 
-import erp.forge.core.common.commands.CommandTest;
+import erp.forge.core.common.commands.CommandCustomPlayerdData;
+import erp.forge.core.datamanager.PlayerDatas;
 import erp.forge.core.network.PacketHandler;
 import erp.forge.core.proxy.CommonProxy;
 import net.minecraftforge.common.MinecraftForge;
@@ -60,7 +61,9 @@ public class ERPCoreForge {
 
     @EventHandler
     public void serverStarting(final FMLServerStartingEvent event) {
-        event.registerServerCommand(new CommandTest());
+        PlayerDatas.onServerStarting(event);
+
+        event.registerServerCommand(new CommandCustomPlayerdData());
 
     }
 }

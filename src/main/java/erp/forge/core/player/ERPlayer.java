@@ -26,6 +26,73 @@ public class ERPlayer {
         return FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(this.uuid);
     }
 
+    // USER MANAGMENT
+
+    public String getFirstname(){
+        return (String)this.get(EnumProfile.FIRSTNAME);
+    }
+
+    public void setFirstname(String firstname){
+        this.set(EnumProfile.FIRSTNAME, firstname);
+    }
+
+    public String getLastname(){
+        return (String)this.get(EnumProfile.LASTNAME);
+    }
+
+    public void setLastname(String lastname){
+        this.set(EnumProfile.LASTNAME, lastname);
+    }
+
+    public int getAge(){
+        return (int)this.get(EnumProfile.AGE);
+    }
+
+    public void setAge(int age){
+        this.set(EnumProfile.AGE, age);
+    }
+
+    public String getJob(){
+        return (String)this.get(EnumProfile.JOB);
+    }
+
+    public void setJob(String job){
+        this.set(EnumProfile.JOB, job);
+    }
+
+    public int getMoney(){
+        return (int)this.get(EnumProfile.MONEY);
+    }
+
+    public void setMoney(int money){
+        this.set(EnumProfile.MONEY, money);
+    }
+
+    public void addMoney(int money){
+        this.add(EnumProfile.MONEY, money);
+    }
+
+    public void removeMoney(int money){
+        this.remove(EnumProfile.MONEY, money);
+    }
+
+    public int getBank(){
+        return (int)this.get(EnumProfile.BANK);
+    }
+
+    public void setBank(int bank){
+        this.set(EnumProfile.BANK, bank);
+    }
+
+    public void addBank(int bank){
+        this.add(EnumProfile.BANK, bank);
+    }
+
+    public void removeBank(int money){
+        this.remove(EnumProfile.MONEY, money);
+    }
+
+    // GET | SET | ADD | REMOVE
 
     public Object get(EnumProfile enumProfile) {
         if (enumProfile.getType().equals(String.class)) {
@@ -82,7 +149,7 @@ public class ERPlayer {
         }
     }
 
-
+    // UTILS
     public boolean accountExist() {
         if (((String)this.get(EnumProfile.EXIST)).equalsIgnoreCase("yes")) {
             return true;
@@ -101,9 +168,9 @@ public class ERPlayer {
         }
     }
 
-
     public Database getCustomUser() {
         return this.playerData;
     }
+
 
 }

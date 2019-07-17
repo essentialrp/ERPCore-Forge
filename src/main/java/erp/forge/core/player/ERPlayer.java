@@ -133,8 +133,8 @@ public class ERPlayer {
     }
 
 
-    public static Database getCustomUser(EntityPlayer entityPlayer) {
-        return Databases.getPlayerData(entityPlayer);
+    public Database getCustomUser() {
+        return this.playerData;
     }
 
 }

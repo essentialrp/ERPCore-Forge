@@ -44,38 +44,38 @@ public class ERPlayer {
 
     public void set(EnumProfile enumProfile, Object value) {
         ERPCoreForge.logger.info("Trying to set:" + enumProfile.getKey() + " to " + value);
-        if (enumProfile.getDefaultValue() instanceof String && value instanceof String) {
+        if (enumProfile.getValue() instanceof String && value instanceof String) {
             playerData.setString(enumProfile.getKey(), (String) value);
-        } else if (enumProfile.getDefaultValue() instanceof Integer && value instanceof Integer) {
+        } else if (enumProfile.getValue() instanceof Integer && value instanceof Integer) {
             playerData.setInteger(enumProfile.getKey(), (Integer) value);
-        } else if (enumProfile.getDefaultValue() instanceof Double && value instanceof Double) {
+        } else if (enumProfile.getValue() instanceof Double && value instanceof Double) {
             playerData.setDouble(enumProfile.getKey(), (Double) value);
-        } else if (enumProfile.getDefaultValue() instanceof Float && value instanceof Float) {
+        } else if (enumProfile.getValue() instanceof Float && value instanceof Float) {
             playerData.setFloat(enumProfile.getKey(), (Float) value);
-        } else if (enumProfile.getDefaultValue() instanceof Boolean && value instanceof Boolean)
+        } else if (enumProfile.getValue() instanceof Boolean && value instanceof Boolean)
             playerData.setBoolean(enumProfile.getKey(), (Boolean) value);
     }
 
     public void add(EnumProfile enumProfile, Object value) {
-        if (enumProfile.getDefaultValue() instanceof Integer && value instanceof Integer) {
+        if (enumProfile.getValue() instanceof Integer && value instanceof Integer) {
             playerData.setInteger(enumProfile.getKey(), (int) get(enumProfile) + (int) value);
-        } else if (enumProfile.getDefaultValue() instanceof Double && value instanceof Double) {
+        } else if (enumProfile.getValue() instanceof Double && value instanceof Double) {
             playerData.setDouble(enumProfile.getKey(), (double) get(enumProfile) + (double) value);
-        } else if (enumProfile.getDefaultValue() instanceof Float && value instanceof Float) {
+        } else if (enumProfile.getValue() instanceof Float && value instanceof Float) {
             playerData.setFloat(enumProfile.getKey(), (float) get(enumProfile) + (float) value);
         }
     }
 
     public void remove(EnumProfile enumProfile, Object value) {
-        if (enumProfile.getDefaultValue() instanceof Integer && value instanceof Integer) {
+        if (enumProfile.getValue() instanceof Integer && value instanceof Integer) {
             if ((int) value <= (int) get(enumProfile)) {
                 playerData.setInteger(enumProfile.getKey(), (int) get(enumProfile) - (int) value);
             }
-        } else if (enumProfile.getDefaultValue() instanceof Double && value instanceof Double) {
+        } else if (enumProfile.getValue() instanceof Double && value instanceof Double) {
             if ((double) value <= (double) get(enumProfile)) {
                 playerData.setDouble(enumProfile.getKey(), (double) get(enumProfile) - (double) value);
             }
-        } else if (enumProfile.getDefaultValue() instanceof Float && value instanceof Float) {
+        } else if (enumProfile.getValue() instanceof Float && value instanceof Float) {
             if ((float) value <= (float) get(enumProfile)) {
                 playerData.setFloat(enumProfile.getKey(), (float) get(enumProfile) - (float) value);
             }
@@ -96,7 +96,7 @@ public class ERPlayer {
             ERPCoreForge.logger.info("Creating account for: " + getPlayer().getName());
 
             for (EnumProfile data : EnumProfile.values()) {
-                this.set(data, data.getDefaultValue());
+                this.set(data, data.getValue());
             }
         }
     }

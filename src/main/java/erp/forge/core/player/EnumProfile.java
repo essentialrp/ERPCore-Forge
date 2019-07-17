@@ -15,7 +15,7 @@ public enum  EnumProfile {
 
     private int id;
     private String key;
-    private Object defaultValue;
+    private Object value;
     private Class type;
 
     public static Map<String, EnumProfile> enumProfile = new HashMap<>();
@@ -24,7 +24,7 @@ public enum  EnumProfile {
     EnumProfile(int id, String key, Object defaultValue, Class type){
         this.id = id;
         this.key = key;
-        this.defaultValue = defaultValue;
+        this.value = defaultValue;
         this.type = type;
     }
 
@@ -50,12 +50,12 @@ public enum  EnumProfile {
         this.key = key;
     }
 
-    public Object getDefaultValue() {
-        return defaultValue;
+    public Object getValue() {
+        return value;
     }
 
-    public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = defaultValue;
+    public void setValue(Object defaultValue) {
+        this.value = defaultValue;
     }
 
     public Class getType() {

@@ -11,7 +11,7 @@ public class PacketHandler {
     private static int nextId = 1;
 
     public static void init() {
-        //registerMessage(XXXX.Handler.class, XXXX.class, Side.SERVER);
+        //registerMessage(MessageSyncNBT.class, MessageSyncNBT.class, Side.SERVER);
     }
 
     private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {

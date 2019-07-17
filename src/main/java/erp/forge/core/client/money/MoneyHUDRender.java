@@ -34,9 +34,10 @@ public class MoneyHUDRender {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onRender(final RenderGameOverlayEvent.Post event) {
-        if (this.mc.ingameGUI.getChatGUI().getChatOpen()) {
-            return;
-        }
+
+        this.mc.fontRenderer.drawString("500$", event.getResolution().getScaledWidth()-this.mc.fontRenderer.getStringWidth("500$")- 15, 15, Integer.MAX_VALUE);
+
+
         if(this.manager.getEntries().isEmpty()){
             return;
         }
@@ -45,8 +46,8 @@ public class MoneyHUDRender {
         GlStateManager.scale(scale, scale, scale);
         final List<MoneyHUDEntry> entries = this.manager.getEntries().stream().sorted(Comparator.comparingInt(MoneyHUDEntry::getTimeLived).reversed()).collect(Collectors.toList());
         final int chatHeight = calculateChatboxHeight(this.mc.gameSettings.chatHeightFocused);
-        int bottom = event.getResolution().getScaledHeight() - chatHeight - 10;
-        final int left = 5;
+        int bottom = 90;
+        final int left = event.getResolution().getScaledWidth()-45;
         final int messagesHeight = entries.size() * this.mc.fontRenderer.FONT_HEIGHT + entries.size();
         bottom -= messagesHeight;
         int messagesWidth = 0;
@@ -61,7 +62,7 @@ public class MoneyHUDRender {
         }
         GlStateManager.popMatrix();
     }
-    
+
     public static int calculateChatboxHeight(final float scale) {
         return MathHelper.floor(scale * 160.0f + 20.0f);
     }

@@ -10,6 +10,8 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
 @Mod(modid = "customplayerdata")
 public class SimpleDatabaseManager {
@@ -25,11 +27,17 @@ public class SimpleDatabaseManager {
 
     @Mod.Instance
     private static SimpleDatabaseManager instance;
+    private SimpleNetworkWrapper packetChannel;
+
+    public SimpleNetworkWrapper getPacketChannel() {
+        return this.packetChannel;
+    }
 
     @Mod.EventHandler
     public void preInitialization(FMLPreInitializationEvent e){
+        this.packetChannel = NetworkRegistry.INSTANCE.newSimpleChannel("sdm");
         getProxy().preInitialization(e.getSuggestedConfigurationFile());
-        PacketHandler.initPackets();
+        PacketHandler.init();
     }
 
     @Mod.EventHandler

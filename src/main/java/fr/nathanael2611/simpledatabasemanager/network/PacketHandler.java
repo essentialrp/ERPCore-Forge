@@ -1,5 +1,7 @@
 package fr.nathanael2611.simpledatabasemanager.network;
 
+import erp.forge.core.ERPCoreForge;
+import erp.forge.core.network.message.MessagePlayerMoneyHUD;
 import fr.nathanael2611.simpledatabasemanager.SimpleDatabaseManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -10,29 +12,19 @@ import net.minecraftforge.fml.relauncher.Side;
 
 public class PacketHandler {
 
-    private static SimpleNetworkWrapper network;
+    public static final SimpleNetworkWrapper INSTANCE;
     private static int nextId = 1;
 
-    public static void initPackets(){
-        network = NetworkRegistry.INSTANCE.newSimpleChannel(SimpleDatabaseManager.MOD_ID.toUpperCase());
-
-        registerMessage(
-                PacketSendClientPlayerData.Handler.class,
-                PacketSendClientPlayerData.class,
-                Side.CLIENT
-        );
+    public static void init() {
+        registerMessage(PacketSendClientPlayerData.Handler.class, PacketSendClientPlayerData.class, Side.CLIENT);
     }
 
-    private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(
-            Class<? extends IMessageHandler<REQ, REPLY>> messageHandler,
-            Class<REQ> requestMessageType,
-            Side side
-    ) {
-        network.registerMessage(messageHandler, requestMessageType, nextId++, side);
+    private static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
+        INSTANCE.registerMessage(messageHandler, requestMessageType, nextId++, side);
 
     }
 
-    public static SimpleNetworkWrapper getNetwork() {
-        return network;
+    static {
+        INSTANCE = ERPCoreForge.instance.getPacketChannel();
     }
 }

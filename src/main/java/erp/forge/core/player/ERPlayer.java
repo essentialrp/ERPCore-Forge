@@ -31,27 +31,27 @@ public class ERPlayer {
     // USER MANAGMENT
 
     public String getFirstname(){
-        return (String)this.get(EnumProfile.FIRSTNAME);
+        return (String) this.get(EnumProfile.FIRSTNAME);
     }
 
     public void setFirstname(String firstname){
-        this.set(EnumProfile.FIRSTNAME, firstname);
+        set(EnumProfile.FIRSTNAME, firstname);
     }
 
-    public String getLastname(){
-        return (String)this.get(EnumProfile.LASTNAME);
+    public String getLastname() {
+        return (String) this.get(EnumProfile.LASTNAME);
     }
 
     public void setLastname(String lastname){
-        this.set(EnumProfile.LASTNAME, lastname);
+        set(EnumProfile.LASTNAME, lastname);
     }
 
     public int getAge(){
-        return (int)this.get(EnumProfile.AGE);
+        return (int) this.get(EnumProfile.AGE);
     }
 
     public void setAge(int age){
-        this.set(EnumProfile.AGE, age);
+        set(EnumProfile.AGE, age);
     }
 
     public void addAge(int age){
@@ -163,7 +163,14 @@ public class ERPlayer {
 
     // UTILS
     public boolean accountExist() {
-        return (this.get(EnumProfile.EXIST) != null);
+        if(this.get(EnumProfile.EXIST) instanceof String){
+            if(((String) this.get(EnumProfile.EXIST)).equalsIgnoreCase("yes")){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
     }
 
     public void loadAccount() {
@@ -182,9 +189,9 @@ public class ERPlayer {
 
     public void sendHUDMoneyEvent(Boolean isWithdraw, int amount){
         if(isWithdraw) {
-            ERPCoreForge.instance.getPacketChannel().sendToAll(new MessagePlayerMoneyHUD("§c-"+amount+"$"));
+            ERPCoreForge.instance.getPacketChannel().sendTo(new MessagePlayerMoneyHUD("§c-"+amount+"$"), getPlayer());
         } else {
-            ERPCoreForge.instance.getPacketChannel().sendToAll(new MessagePlayerMoneyHUD("§a+"+amount+"$"));
+            ERPCoreForge.instance.getPacketChannel().sendTo(new MessagePlayerMoneyHUD("§a+"+amount+"$"), getPlayer());
         }
     }
 

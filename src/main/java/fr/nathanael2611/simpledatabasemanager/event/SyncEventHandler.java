@@ -29,10 +29,12 @@ public class SyncEventHandler {
     @SubscribeEvent
     public static void onJoin(PlayerEvent.PlayerLoggedInEvent e){
         if(!e.player.world.isRemote){
-            PacketHandler.getNetwork().sendTo(
+
+            SimpleDatabaseManager.getInstance().getPacketChannel().sendTo(
                     new PacketSendClientPlayerData(e.player),
                     FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(e.player.getName())
             );
+
         }
     }
 }

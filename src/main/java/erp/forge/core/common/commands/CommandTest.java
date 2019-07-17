@@ -5,6 +5,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.text.TextComponentString;
 
 public class CommandTest extends CommandBase {
     @Override
@@ -31,6 +32,7 @@ public class CommandTest extends CommandBase {
             final EntityPlayerMP player = (EntityPlayerMP) sender;
             ERPlayer erPlayer = new ERPlayer(player.getUniqueID());
             erPlayer.addMoney(150);
+            player.sendMessage(new TextComponentString("Money: "+erPlayer.getMoney()));
 
         }
     }

@@ -16,10 +16,10 @@ public class CommonEvents {
     @SideOnly(Side.SERVER)
     public void onPlayerLogIn(final PlayerEvent.PlayerLoggedInEvent event) {
         final EntityPlayerMP player = (EntityPlayerMP)event.player;
-        ERPCoreForge.logger.info("Loading account");
-        ERPlayer erPlayer = new ERPlayer(player.getUniqueID());
-        erPlayer.loadAccount();
-        player.sendMessage(new TextComponentString("Age: "+erPlayer.getAge()));
+        //ERPCoreForge.logger.info("Loading account");
+        //ERPlayer erPlayer = new ERPlayer(player.getUniqueID());
+        //erPlayer.loadAccount();
+        //player.sendMessage(new TextComponentString("Age: "+erPlayer.getAge()));
     }
 
 }

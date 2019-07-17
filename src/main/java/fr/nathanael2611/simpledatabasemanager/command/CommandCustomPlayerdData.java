@@ -1,9 +1,8 @@
-package erp.forge.core.common.commands;
+package fr.nathanael2611.simpledatabasemanager.command;
 
-
-import erp.forge.core.datamanager.Database;
-import erp.forge.core.datamanager.Databases;
-import erp.forge.core.util.Helpers;
+import fr.nathanael2611.simpledatabasemanager.core.Database;
+import fr.nathanael2611.simpledatabasemanager.core.Databases;
+import fr.nathanael2611.simpledatabasemanager.util.Helpers;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -79,7 +78,7 @@ public class CommandCustomPlayerdData extends CommandBase {
                 }
                 StringBuilder builder = null;
                 if(actionType.equalsIgnoreCase("setString")){
-                     builder = new StringBuilder();
+                    builder = new StringBuilder();
                     for(int i = 3; i < args.length; i++){
                         builder.append(args[i]).append(" ");
                     }
@@ -131,16 +130,13 @@ public class CommandCustomPlayerdData extends CommandBase {
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         if(args.length == 2)
             return getListOfStringsMatchingLastWord(
-                    args,
-                    "getString", "getInteger", "getDouble", "getFloat", "getBoolean",
-                    "setString", "setInteger", "setDouble", "setFloat", "setBoolean"
-            );
+                    args, Database.COMMAND_ALL_ACTIONS
+                    );
         if(args.length == 3){
             EntityPlayer player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(args[0]);
             if(player != null){
                 System.out.println(args[1]);
                 if(args[1].contains("String")){
-                    System.out.println("pas foufou x)");
                     return getListOfStringsMatchingLastWord(
                             args,
                             Databases.getPlayerData(player).getAllStringEntry()

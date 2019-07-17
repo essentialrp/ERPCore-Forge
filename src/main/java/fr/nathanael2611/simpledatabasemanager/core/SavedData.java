@@ -1,4 +1,4 @@
-package erp.forge.core.datamanager;
+package fr.nathanael2611.simpledatabasemanager.core;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -43,7 +43,6 @@ public class SavedData implements INBTSerializable<NBTTagCompound> {
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
         key = nbt.getString("key");
-        System.out.println(" ouf quoi :/");
 
         if (object.equals(String.class)) {
             this.value = nbt.getString("value");

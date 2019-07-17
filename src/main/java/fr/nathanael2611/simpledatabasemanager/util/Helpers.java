@@ -1,4 +1,4 @@
-package erp.forge.core.util;
+package fr.nathanael2611.simpledatabasemanager.util;
 
 import java.util.HashMap;
 

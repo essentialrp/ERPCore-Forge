@@ -5,12 +5,13 @@ import java.util.Map;
 
 public enum  EnumProfile {
 
-    EXIST(1, "exist", true, Boolean.class),
+    EXIST(0, "exist", true, Boolean.class),
     FIRSTNAME(1, "firstname", "", String.class),
     LASTNAME(2, "lastname", "", String.class),
-    JOB(3, "job", "", String.class),
-    BANK(4, "bank", 0, Integer.class),
-    MONEY(4, "money", 0, Integer.class);
+    AGE(3, "age", 0, Integer.class),
+    JOB(4, "job", "", String.class),
+    BANK(5, "bank", 0, Integer.class),
+    MONEY(6, "money", 0, Integer.class);
 
     private int id;
     private String key;

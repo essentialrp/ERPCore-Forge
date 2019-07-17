@@ -15,7 +15,7 @@ public class CommonEvents {
     @SideOnly(Side.SERVER)
     public void onPlayerLogIn(final PlayerEvent.PlayerLoggedInEvent event) {
         final EntityPlayerMP player = (EntityPlayerMP)event.player;
-        ERPCoreForge.logger.info("Creating account");
+        ERPCoreForge.logger.info("Loading account");
         ERPlayer.loadAccount(player);
     }
 

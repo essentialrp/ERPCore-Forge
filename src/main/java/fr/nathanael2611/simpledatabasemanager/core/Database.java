@@ -1,6 +1,5 @@
 package fr.nathanael2611.simpledatabasemanager.core;
 
-import fr.nathanael2611.simpledatabasemanager.SimpleDatabaseManager;
 import fr.nathanael2611.simpledatabasemanager.network.PacketHandler;
 import fr.nathanael2611.simpledatabasemanager.network.PacketSendClientPlayerData;
 import fr.nathanael2611.simpledatabasemanager.util.Helpers;
@@ -61,6 +60,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void removeString(String key) {
         STRINGS.remove(key);
+        save();
     }
 
 
@@ -79,6 +79,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void removeInteger(String key) {
         INTEGERS.remove(key);
+        save();
     }
 
     /**
@@ -96,6 +97,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void removeDouble(String key) {
         DOUBLES.remove(key);
+        save();
     }
 
     /**
@@ -113,6 +115,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void removeFloat(String key) {
         FLOATS.remove(key);
+        save();
     }
 
     /**
@@ -130,6 +133,7 @@ public class Database implements INBTSerializable<NBTTagCompound> {
     }
     public void removeBoolean(String key) {
         BOOLEANS.remove(key);
+        save();
     }
 
     @Override
@@ -289,18 +293,16 @@ public class Database implements INBTSerializable<NBTTagCompound> {
 
     public void save(){
         Databases.save();
-        try {
-            EntityPlayerMP player = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUUID(UUID.fromString(this.id));
-            if(player != null){
 
-                SimpleDatabaseManager.getInstance().getPacketChannel().sendTo(
-                        new PacketSendClientPlayerData(player), player
-                );
+    }
 
-            }
-        } catch (Exception ex) {
-        }
-
+    /**
+     * Convert database to read-only one
+     */
+    public DatabaseReadOnly toReadOnly(){
+        DatabaseReadOnly readOnly = new DatabaseReadOnly();
+        readOnly.deserializeNBT(this.serializeNBT());
+        return readOnly;
     }
 
 }

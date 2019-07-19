@@ -20,6 +20,11 @@ public class ERPlayer {
         this.playerData = Databases.getPlayerData(getPlayer());
     }
 
+    public ERPlayer(UUID uuid, Database database) {
+        this.uuid = uuid;
+        this.playerData = database;
+    }
+
     public UUID getUUID() {
         return uuid;
     }
@@ -98,10 +103,13 @@ public class ERPlayer {
 
     public void addBank(int bank){
         this.add(EnumProfile.BANK, bank);
+        this.sendHUDMoneyEvent(false, bank);
     }
 
-    public void removeBank(int money){
-        this.remove(EnumProfile.MONEY, money);
+    public void removeBank(int bank){
+        this.remove(EnumProfile.BANK
+                , bank);
+        this.sendHUDMoneyEvent(true, bank);
     }
 
     // GET | SET | ADD | REMOVE

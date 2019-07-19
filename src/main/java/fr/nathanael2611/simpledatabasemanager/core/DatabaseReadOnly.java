@@ -1,7 +1,10 @@
 package fr.nathanael2611.simpledatabasemanager.core;
 
-import javax.annotation.PreDestroy;
-
+/**
+ * Simply a read-only database.
+ *
+ * @author Nathanael2611
+ */
 public class DatabaseReadOnly extends Database {
 
     public void printNoPermMessage(){

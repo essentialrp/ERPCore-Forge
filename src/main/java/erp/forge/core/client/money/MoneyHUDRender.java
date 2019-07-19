@@ -1,7 +1,10 @@
 package erp.forge.core.client.money;
 
+import erp.forge.core.client.render.RenderHelper;
+import erp.forge.core.player.ERPlayerClient;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,6 +19,10 @@ import java.util.stream.Collectors;
 public class MoneyHUDRender {
     private MoneyHUDManager manager;
     private Minecraft mc;
+
+    public static final ResourceLocation bank = new ResourceLocation("erp-core-forge", "textures/icons/bank.png");
+    public static final ResourceLocation money = new ResourceLocation("erp-core-forge", "textures/icons/money.png");
+
 
     public MoneyHUDRender(final MoneyHUDManager manager) {
         this.mc = Minecraft.getMinecraft();
@@ -35,7 +42,24 @@ public class MoneyHUDRender {
     @SideOnly(Side.CLIENT)
     public void onRender(final RenderGameOverlayEvent.Post event) {
 
-        this.mc.fontRenderer.drawString("500$", event.getResolution().getScaledWidth()-this.mc.fontRenderer.getStringWidth("500$")- 15, 15, Integer.MAX_VALUE);
+        ERPlayerClient playerClient = new ERPlayerClient(mc.player.getUniqueID());
+
+
+        GlStateManager.pushMatrix();
+
+
+        this.mc.fontRenderer.drawString(playerClient.getBank()+"$", event.getResolution().getScaledWidth()-this.mc.fontRenderer.getStringWidth(playerClient.getBank()+"$")- 15, 10, Integer.MAX_VALUE);
+        this.mc.fontRenderer.drawString(playerClient.getMoney()+"$", event.getResolution().getScaledWidth()-this.mc.fontRenderer.getStringWidth(playerClient.getMoney()+"$")- 15, 25, Integer.MAX_VALUE);
+
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.enableBlend();
+        RenderHelper.renderImage(event.getResolution().getScaledWidth()-12, 9, bank, 9,9);
+        RenderHelper.renderImage(event.getResolution().getScaledWidth()-12, 24, money, 9,9);
+        GlStateManager.disableBlend();
+
+
+        GlStateManager.popMatrix();
 
 
         if(this.manager.getEntries().isEmpty()){
@@ -45,9 +69,7 @@ public class MoneyHUDRender {
         final float scale = 1f;
         GlStateManager.scale(scale, scale, scale);
         final List<MoneyHUDEntry> entries = this.manager.getEntries().stream().sorted(Comparator.comparingInt(MoneyHUDEntry::getTimeLived).reversed()).collect(Collectors.toList());
-        final int chatHeight = calculateChatboxHeight(this.mc.gameSettings.chatHeightFocused);
-        int bottom = 90;
-        final int left = event.getResolution().getScaledWidth()-45;
+        int bottom = 100;
         final int messagesHeight = entries.size() * this.mc.fontRenderer.FONT_HEIGHT + entries.size();
         bottom -= messagesHeight;
         int messagesWidth = 0;
@@ -57,13 +79,10 @@ public class MoneyHUDRender {
 
         int msgY = bottom;
         for (final MoneyHUDEntry entry2 : entries) {
+            final int left = event.getResolution().getScaledWidth()-this.mc.fontRenderer.getStringWidth(entry2.getText()+"$")- 10;
             this.mc.fontRenderer.drawString(entry2.getText(), (int)(left / scale), (int)(msgY / scale), Integer.MAX_VALUE);
             msgY += this.mc.fontRenderer.FONT_HEIGHT + 1;
         }
         GlStateManager.popMatrix();
-    }
-
-    public static int calculateChatboxHeight(final float scale) {
-        return MathHelper.floor(scale * 160.0f + 20.0f);
     }
 }

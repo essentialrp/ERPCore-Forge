@@ -31,8 +31,13 @@ public class CommandTest extends CommandBase {
         if (sender instanceof EntityPlayerMP) {
             final EntityPlayerMP player = (EntityPlayerMP) sender;
             ERPlayer erPlayer = new ERPlayer(player.getUniqueID());
-            erPlayer.addMoney(150);
-            player.sendMessage(new TextComponentString("Money: "+erPlayer.getMoney()));
+            boolean minus = Boolean.valueOf(args[0]);
+            int money = Integer.parseInt(args[1]);
+            if (minus) {
+                erPlayer.removeMoney(money);
+            } else {
+                erPlayer.addMoney(money);
+            }
 
         }
     }

@@ -1,7 +1,6 @@
 package fr.nathanael2611.simpledatabasemanager.network;
 
 import fr.nathanael2611.simpledatabasemanager.client.ClientDatabases;
-import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.DatabaseReadOnly;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import io.netty.buffer.ByteBuf;
@@ -13,6 +12,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
+/**
+ * Used for send his player data to a player
+ *
+ * @author Nathanael2611
+ */
 public class PacketSendClientPlayerData implements IMessage {
 
     private DatabaseReadOnly playerData;

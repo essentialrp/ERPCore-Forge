@@ -13,10 +13,15 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 
+/**
+ * The mod main-class
+ *
+ * @author Nathanael2611
+ */
 @Mod(modid = "customplayerdata")
 public class SimpleDatabaseManager {
 
-    public static final String MOD_ID = "simpledatabasemanager";
+    public static final String MOD_ID = "sdm";
     public static final String MOD_NAME = "SimpleDatabaseManager";
 
     @SidedProxy(
@@ -27,6 +32,7 @@ public class SimpleDatabaseManager {
 
     @Mod.Instance
     private static SimpleDatabaseManager instance;
+
     private SimpleNetworkWrapper packetChannel;
 
     public SimpleNetworkWrapper getPacketChannel() {

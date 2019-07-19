@@ -18,12 +18,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
+
 @Mod(modid = ERPCoreForge.MODID, name = "erp-core-forge",version = ERPCoreForge.VERSION)
 public class ERPCoreForge {
 
     public static final String MODID = "erp-core-forge";
 	public static final String VERSION = "0.1";
     public static Logger logger;
+    public static File MOD_DIR;
 
     private SimpleNetworkWrapper erpCoreForgePacketChannel;
 
@@ -49,6 +52,11 @@ public class ERPCoreForge {
     public void preInit(FMLPreInitializationEvent event) {
         logger = event.getModLog();
         proxy.preInit(event);
+
+        MOD_DIR = new File(event.getModConfigurationDirectory().getParent(), "config");
+
+        new ModConfig(new File(MOD_DIR, "erp-core_config.json"));
+
 
         this.erpCoreForgePacketChannel = NetworkRegistry.INSTANCE.newSimpleChannel("erpcore");
         PacketHandler.init();
